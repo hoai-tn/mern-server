@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const postRouter = require("./src/routers/post.js");
+const userRouter = require("./src/routers/user.js");
 const port = process.env.PORT || 3333;
 const app = express();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/posts", postRouter);
+app.use("/user", userRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
