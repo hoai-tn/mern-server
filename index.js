@@ -22,10 +22,6 @@ mongoose
     console.log("Connected to the database");
   });
 // mongoose.set("useFindAndModify", false);
-app.get("/", (req, res) => {
-  res.send("Hello word!");
-});
-
 app.use("/posts", postRouter);
 app.use("/user", userRouter);
 
