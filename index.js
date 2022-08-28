@@ -1,13 +1,29 @@
+// const postRouter = require("./a");
+require("dotenv").config();
+
 const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const postRouter = require("./src/routers/post.js");
+const userRouter = require("./src/routers/user.js");
+const port = process.env.PORT || 3333;
 const app = express();
-const port = 9999;
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+app.use(cors());
 
-//middleware
-app.use(express.json());
-
-app.use("/", (req, res) => {
-  res.send("Hello word!")
-});
+mongoose
+  .connect(process.env.DB_CONNECTION, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log("Connected to the database");
+  });
+// mongoose.set("useFindAndModify", false);
+app.use("/posts", postRouter);
+app.use("/user", userRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
